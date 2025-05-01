@@ -128,11 +128,25 @@ Uses: No registers altered by the function
 find_max:
     PUSH    {lr} 
 
-/* Add code to find maximum value element here! */
-/* Any registers altered by the function beside r0-r3 must be preserved */
+    MOV r1, #0              // r1 = index
+    MOV r2, r0              // r2 = base address of array
+    LDR r0, [r2]            // r0 = current max (test[0])
 
+compare:
+    ADD r1, r1, #1
+    CMP r1, #10             // 10 elements
+    BEQ endFunc
+    LDR r3, [r2, r1, LSL #2]  // test[r1], word offset
+    CMP r0, r3
+    BGE skip
+    MOV r0, r3              // update max
+
+skip: 
+    B compare
+
+endFunc:
     POP     {pc}
-	
+
 
 /**********************
  main program
