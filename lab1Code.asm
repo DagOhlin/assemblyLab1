@@ -113,9 +113,37 @@ Returns: factorial for that nummber
 *******************************************************************/
 // Write your function code here
 
+factorial: 
+    PUSH {r1, lr}
+    MUL r0, r0, r1
+    SUB r1, r1, #1
+    cmp r1, #1
+    BLE end_fractional
+    BL factorial
 
+end_fractional:
+    POP {r1, pc}
 
 /*******************************************************************
  Main program
 *******************************************************************/
 // Write code for your main program here 
+
+_start: 
+        
+mov r1, #0
+                 
+    
+compare:
+    MOV r0, #1 
+    ADD r1, r1, #1
+    BL 	factorial
+    BL  print_number
+    CMP r1, #10             
+    BEQ _end
+    
+    B compare
+_end:
+    B _end
+
+.end
